@@ -603,7 +603,7 @@ const Sidebar = () => {
         <p>About Press Copyright Contact us Creator Advertise Developers </p>
         <br />
         <p>Terms Privacy Policy & Safety How YouTube works Test new features</p>
-        © 2024 Google LLC
+        © 2025 $id
       </div>
     </div>
   );
