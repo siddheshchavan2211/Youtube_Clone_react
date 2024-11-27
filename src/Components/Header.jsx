@@ -77,6 +77,11 @@ const Header = () => {
           onChange={handleInputChange} // Update both local and context state
           onFocus={() => setboxtoggle(true)}
           onBlur={() => setboxtoggle(false)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              searchonclick();
+            }
+          }}
         />
         <button
           onClick={searchonclick}

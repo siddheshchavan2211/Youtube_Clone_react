@@ -15,7 +15,7 @@ const AppRouter = createBrowserRouter(
     {
       path: "/",
       element: (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen ">
           {/* Apply flex-col for stacking components */}
           <Header />
           <Body />
