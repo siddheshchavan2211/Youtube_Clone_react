@@ -9,3 +9,5 @@ export const YOutube_Suggestion_api =
 
 export const Random_Chat_Api =
   "https://cors-anywhere.herokuapp.com/https://api.quotable.io/random";
+
+export const Random_String_Api = "https://favqs.com/api/qotd";

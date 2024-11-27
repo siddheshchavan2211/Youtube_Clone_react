@@ -1,7 +1,7 @@
 export default function ChatComp(props) {
   return (
     <div>
-      <p className="flex items-center m-1 pl-4">
+      <p className="flex items-center m-1 pl-4 text-sm">
         {" "}
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -9,7 +9,7 @@ export default function ChatComp(props) {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-8 "
+          className="w-8 h-8 "
         >
           <path
             strokeLinecap="round"
@@ -17,8 +17,10 @@ export default function ChatComp(props) {
             d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
           />
         </svg>
-        <span className="font-bold pl-2">{props.name}</span>
-        <span className="pl-2">{props.comment}</span>
+        <span className="font-bold pl-2 whitespace-nowrap">{props.name}</span>
+        <span className="pl-2 whitespace-nowrap overflow-hidden text-ellipsis">
+          {props.comment}
+        </span>
       </p>
     </div>
   );

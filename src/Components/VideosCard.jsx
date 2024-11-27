@@ -3,10 +3,13 @@ import { useSearch } from "./SearchContext"; // Import the context hook
 import { Link } from "react-router-dom";
 import Cardfetch, { Newaddcomponent } from "./Cardfetch"; // Assume you have a component that renders the video cards
 import { youtubeapi } from "./apikey";
+import { useSelector } from "react-redux";
 
 const VideosCard = () => {
   const [Card, setCard] = useState([]); // Fetched cards
   const [filtersearch, setfiltersearch] = useState([]);
+  const sidebarVisible = useSelector((state) => state.app.isMenuOnline); // Access Redux state for sidebar visibility
+
   const { searchTerm } = useSearch(); // Get the search term from context
 
   useEffect(() => {
@@ -37,7 +40,13 @@ const VideosCard = () => {
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-center mt-12">
+    <div
+      className={`${
+        sidebarVisible
+          ? "ml-56 flex flex-wrap items-center justify-center mt-12 "
+          : "flex flex-wrap items-center justify-center mt-12"
+      }`}
+    >
       {Card[0] && <Newaddcomponent info={Card[0]} />}{" "}
       {/* High order function render like youtube ads */}
       {filtersearch.map((Card) => (

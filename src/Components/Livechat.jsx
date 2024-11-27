@@ -3,27 +3,40 @@ import ChatComp from "./ChatComp";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage } from "./Utils/MessageSlice";
+import { Random_String_Api } from "./apikey";
 export default function Livechat() {
   const [liveMessage, setlivemessage] = useState();
+  const [nameS, setname] = useState();
+  const [comm, setcomm] = useState();
   const dispatch = useDispatch();
   const chatSelector = useSelector((store) => store.message.Message);
   //crate use effect add interval then clear interval in add call api pooling and dispatch and action to send data to slice and then
   //subscribe to store and run map function on it to come data at interval
+
   useEffect(() => {
-    const Timer = setInterval(() => {
+    const Timer = setInterval(async () => {
+      await StringGenerate();
+
       dispatch(
         addMessage({
-          name: "siddhesh",
-          comment: "hello awsm",
+          name: nameS,
+          comment: comm,
         })
       );
     }, 2000);
-    return () => clearInterval(Timer);
-  }, []);
 
+    return () => clearInterval(Timer);
+  }, [nameS, comm, dispatch]);
+
+  const StringGenerate = async () => {
+    const data = await fetch(Random_String_Api);
+    const json = await data.json();
+    setname(json.quote.author);
+    setcomm(json.quote.body.slice(0, 30));
+  };
   return (
     <div>
-      <div className="ml-6 mt-10 bg-slate-100 w-96 h-[550px] rounded-lg border border-black   flex flex-col-reverse overflow-y-scroll ">
+      <div className="ml-6 mt-20 bg-slate-100 w-96 h-[550px] rounded-lg border border-black   flex flex-col-reverse overflow-y-scroll ">
         {chatSelector.map((e, i) => {
           return <ChatComp key={i} name={e.name} comment={e.comment} />;
         })}

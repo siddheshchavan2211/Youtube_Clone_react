@@ -28,7 +28,11 @@ const Buttons = () => {
       {scrollPosition > 0 && (
         <button
           onClick={scrollLeft}
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white p-2 rounded-full z-10"
+          className={`${
+            sidebarVisible
+              ? "absolute left-52 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white p-2 rounded-full z-10"
+              : "absolute left-40 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white p-2 rounded-full z-10"
+          }`}
         >
           {"<"}
         </button>
@@ -37,7 +41,7 @@ const Buttons = () => {
       <div
         // className=" overflow-hidden grid col-span-2"
         className={` ${
-          sidebarVisible ? "overflow-hidden " : "overflow-hidden ml-40"
+          sidebarVisible ? "overflow-hidden  ml-56" : "overflow-hidden ml-40"
         } `}
         style={{
           width: sidebarVisible ? "1264px" : "1359px",

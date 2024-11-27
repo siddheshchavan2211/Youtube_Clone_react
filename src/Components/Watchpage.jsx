@@ -10,12 +10,13 @@ const Watchpage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(sidebarhide());
+    window.scrollTo(10, 0); // Scroll to the top of the page
   }, []);
 
   return (
     <div className="w-full ">
       <div className="flex w-full ">
-        <div className=" ml-10 my-10 ">
+        <div className=" ml-10 my-20 ">
           <iframe
             className="rounded-3xl shadow-2xl"
             width="1000"
