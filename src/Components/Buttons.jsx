@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Btnlist } from "./Btnlist";
+import { useSelector } from "react-redux";
 
 const Buttons = () => {
   const buttonWidth = 100; // Width of each button in px
   const buttonsVisibleCount = 12; // Number of buttons visible at a time
+  const sidebarVisible = useSelector((state) => state.app.isMenuOnline); // Access Redux state for sidebar visibility
 
   const [scrollPosition, setScrollPosition] = useState(0); // Track the scroll position
   const maxScroll = (Btnlist.length - buttonsVisibleCount) * buttonWidth; // Max scroll position
@@ -19,7 +21,7 @@ const Buttons = () => {
   };
 
   return (
-    <div className="relative w-full mt-4 z-10">
+    <div className="relative w-full mt-20 z-10 ">
       {" "}
       {/* Button container with a lower z-index */}
       {/* Left Arrow Button, initially hidden */}
@@ -32,9 +34,17 @@ const Buttons = () => {
         </button>
       )}
       {/* Scrollable container for the buttons */}
-      <div className="overflow-hidden" style={{ width: `1280px` }}>
+      <div
+        // className=" overflow-hidden grid col-span-2"
+        className={` ${
+          sidebarVisible ? "overflow-hidden " : "overflow-hidden ml-40"
+        } `}
+        style={{
+          width: sidebarVisible ? "1264px" : "1359px",
+        }}
+      >
         <div
-          className="flex transition-transform"
+          className="flex transition-transform bg-inherit"
           style={{ transform: `translateX(-${scrollPosition}px)` }}
         >
           {Btnlist.map((button, index) => (

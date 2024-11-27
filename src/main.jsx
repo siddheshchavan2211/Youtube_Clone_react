@@ -8,16 +8,18 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Watchpage from "./Components/Watchpage";
 import MainContainer from "./Components/MainContainer";
+import { SearchProvider } from "./Components/SearchContext";
 
 const AppRouter = createBrowserRouter(
   [
     {
       path: "/",
       element: (
-        <>
+        <div className="flex flex-col min-h-screen">
+          {/* Apply flex-col for stacking components */}
           <Header />
           <Body />
-        </>
+        </div>
       ),
       children: [
         {
@@ -45,7 +47,9 @@ const AppRouter = createBrowserRouter(
 
 const root = createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
-    <RouterProvider router={AppRouter}></RouterProvider>
-  </Provider>
+  <SearchProvider>
+    <Provider store={store}>
+      <RouterProvider router={AppRouter}></RouterProvider>
+    </Provider>
+  </SearchProvider>
 );

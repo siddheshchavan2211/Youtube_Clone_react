@@ -6,3 +6,6 @@ export const youtubeapi =
 
 export const YOutube_Suggestion_api =
   " http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
+
+export const Random_Chat_Api =
+  "https://cors-anywhere.herokuapp.com/https://api.quotable.io/random";

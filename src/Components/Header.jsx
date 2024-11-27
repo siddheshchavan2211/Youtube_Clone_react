@@ -1,17 +1,20 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { togglesidebar } from "./Utils/sidebarslice";
 import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { YOutube_Suggestion_api } from "./apikey";
 import { cachedata } from "./Utils/searchSlice";
+import { useSearch } from "./SearchContext"; // Import the context hook
 
 const Header = () => {
-  const [suggestion, setsuggestion] = useState(""); //get response input tag and search in api
-  const [boxtoggle, setboxtoggle] = useState(false); //hide and open search result box
-  const [result, setresult] = useState([]); //set the result to the search result box
+  const [suggestion, setsuggestion] = useState(""); // Input for search
+  const [boxtoggle, setboxtoggle] = useState(false); // Toggle search result box
+  const [result, setresult] = useState([]); // Search result
+  const { setSearchTerm } = useSearch(); // Get the setSearchTerm function from context
   const setSelector = useSelector((store) => store.searchincache);
+
   const dispatch = useDispatch();
-  console.log(suggestion);
+
   const ToggleFun = () => {
     dispatch(togglesidebar());
   };
@@ -34,7 +37,6 @@ const Header = () => {
   const SuggestionApi = async () => {
     const data = await fetch(YOutube_Suggestion_api + suggestion);
     const json = await data.json();
-    // console.log(json[1]);
     setresult(json[1]);
     dispatch(
       cachedata({
@@ -42,9 +44,15 @@ const Header = () => {
       })
     );
   };
+  const searchonclick = () => {
+    setSearchTerm(suggestion);
+  };
+  const handleInputChange = (e) => {
+    setsuggestion(e.target.value);
+  };
 
   return (
-    <div className="h-16 pt-2 shadow-lg grid grid-flow-col transform transition-transform duration-100000 ease-in-out relative z-30">
+    <div className="fixed h-16 pt-2 shadow-lg grid grid-flow-col transform transition-transform duration-100000 ease-in-out w-full  z-30 bg-white">
       <div className="flex col-span-1">
         <img
           onClick={() => ToggleFun()}
@@ -65,12 +73,15 @@ const Header = () => {
           className="rounded-l-full border border-gray-500 w-1/2 p-1 pl-3"
           type="text"
           placeholder="search"
-          value={suggestion}
-          onChange={(e) => setsuggestion(e.target.value)}
+          value={suggestion} // Bind the search term
+          onChange={handleInputChange} // Update both local and context state
           onFocus={() => setboxtoggle(true)}
           onBlur={() => setboxtoggle(false)}
         />
-        <button className="bg-gray-200 p-3 rounded-r-full">
+        <button
+          onClick={searchonclick}
+          className="bg-gray-200 p-3 rounded-r-full"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -92,7 +103,7 @@ const Header = () => {
               {result.map((res) => (
                 <li
                   key={res}
-                  className="bg-white mx-2 my-2  hover:bg-slate-300 cursor-default"
+                  className="bg-white mx-2 my-2 hover:bg-slate-300 cursor-default"
                 >
                   🔍&nbsp; {res}
                 </li>
@@ -101,22 +112,7 @@ const Header = () => {
           </div>
         )}
       </div>
-      <div className="col-span-1 pt-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-8"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-          />
-        </svg>
-      </div>
+      <div></div>
     </div>
   );
 };
